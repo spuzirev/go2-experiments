@@ -1,0 +1,18 @@
+package functools
+
+func Reduce[T any](collection []T, fn func(a, b T) T) T {
+	if len(collection) == 0 {
+		panic("collection must not be 0")
+	}
+
+	if len(collection) == 1 {
+		return collection[0]
+	}
+
+	ret := fn(collection[0], collection[1])
+	for i := 2; i < len(collection); i++ {
+		ret = fn(ret, collection[i])
+	}
+
+	return ret
+}

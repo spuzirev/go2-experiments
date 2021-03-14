@@ -1,0 +1,13 @@
+package functools
+
+func GroupBy[T1 any, T2 comparable](col []T1, fn func(T1) T2) map[T2][]T1 {
+	ret := make(map[T2][]T1)
+	for _, v := range col {
+		k := fn(v)
+		if _, ok := ret[k]; !ok {
+			ret[k] = make([]T1, 0)
+		}
+		ret[k] = append(ret[k], v)
+	}
+	return ret
+}

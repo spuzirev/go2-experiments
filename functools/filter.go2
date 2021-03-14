@@ -1,0 +1,11 @@
+package functools
+
+func Filter[T any](collection []T, fn func (T) bool) []T {
+    ret := make([]T, 0)
+    for _, v := range collection {
+        if fn(v) {
+            ret = append(ret, v)
+        }
+    }
+    return ret
+}

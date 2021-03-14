@@ -1,0 +1,24 @@
+package functools
+
+type Pair[T1, T2 any] struct {
+	A T1
+	B T2
+}
+
+func Zip[T1, T2 any](colA []T1, colB []T2) []Pair[T1, T2] {
+	l := len(colA)
+	if l > len(colB) {
+		l = len(colB)
+	}
+
+	ret := make([]Pair[T1, T2], l)
+
+	for i := 0; i < l; i++ {
+		ret[i] = Pair[T1, T2]{
+			A: colA[i],
+			B: colB[i],
+		}
+	}
+
+	return ret
+}

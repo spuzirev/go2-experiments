@@ -1,0 +1,22 @@
+package functools
+
+// Map is map
+func Map[T1, T2 any](collection []T1, fn func(T1) T2) []T2 {
+	ret := make([]T2, len(collection))
+	for i, v := range collection {
+		ret[i] = fn(v)
+	}
+	return ret
+}
+
+func MapE[T1, T2 any](collection []T1, fn func(T1) (T2, error)) ([]T2, error) {
+	ret := make([]T2, len(collection))
+	var err error
+	for i, v := range collection {
+		ret[i], err = fn(v)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return ret, nil
+}

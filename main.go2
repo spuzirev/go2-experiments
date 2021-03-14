@@ -1,0 +1,41 @@
+package main
+
+import (
+	"fmt"
+	"strconv"
+
+	"github.com/spuzirev/exp/functools"
+)
+
+func main() {
+	ints := []int{1, 20, 300}
+	fmt.Printf("%#v\n", ints) // []int{1, 20, 300}
+
+	ss := functools.Map(ints, strconv.Itoa)
+
+	fmt.Printf("%#v\n", ss) // []string{"1", "20", "300"}
+
+	s := functools.Reduce(ss, func(a, b string) string { return fmt.Sprintf("%s%s", a, b) })
+	fmt.Printf("%#v\n", s) // "120300"
+
+	flt := functools.Filter(ints, func(e int) bool { return e%3 == 0 })
+	fmt.Printf("%#v\n", flt)
+
+	fmt.Printf(
+		"%#v\n",
+		functools.Zip(
+			[]int{1, 2, 3},
+			[]string{"one", "two", "three"},
+		),
+	) // []main.instantiate୦functools୦Pair୦int୦string{main.instantiate୦functools୦Pair୦int୦string{A:1, B:"one"}, main.instantiate୦functools୦Pair୦int୦string{A:2, B:"two"}, main.instantiate୦functools୦Pair୦int୦string{A:3, B:"three"}}
+
+	fmt.Printf(
+		"%#v\n",
+		functools.GroupBy(
+			[]int{1, 2, 3, 30, 400, 600},
+			func(e int) int {
+				return len(strconv.Itoa(e))
+			},
+		),
+	) // map[int][]int{1:[]int{1, 2, 3}, 2:[]int{30}, 3:[]int{400, 600}}
+}
