@@ -1,0 +1,32 @@
+package ds
+
+import "fmt"
+
+type Stack[T any] struct {
+	vec Vector[T]
+}
+
+func NewStack[T any]() *Stack[T] {
+	return &Stack[T]{}
+}
+
+func (s *Stack[T]) Push(v T) T {
+	fmt.Println("push")
+	s.vec.Add(v)
+	return v
+}
+
+func (s *Stack[T]) Pop() T {
+	pos := s.vec.Len() - 1
+	v := s.vec.Get(pos)
+	s.vec.RemoveAt(pos)
+	return v
+}
+
+func (s *Stack[T]) IsEmpty() bool {
+	return s.vec.Len() == 0
+}
+
+func (s *Stack[T]) Peek() T {
+	return s.vec.Get(s.vec.Len() - 1)
+}

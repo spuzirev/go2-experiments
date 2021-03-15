@@ -1,0 +1,79 @@
+package ds
+
+type HashSet[T comparable] struct {
+	data map[T]struct{}
+}
+
+func NewHashSet[T comparable]() *HashSet[T] {
+	return &HashSet[T]{
+		data: make(map[T]struct{}),
+	}
+}
+
+func (s *HashSet[T]) Iterator() *HashSetIterator[T] {
+	return &HashSetIterator[T]{
+		set: s,
+		pos: -1,
+	}
+}
+
+func (s *HashSet[T]) Add(v T) bool {
+	if s.Contains(v) {
+		return false
+	}
+	s.data[v] = struct{}{}
+	return true
+}
+
+func (s *HashSet[T]) AddAll(col Collection[T]) bool {
+	modified := false
+	it := col.Iterator()
+	for it.Next() {
+		if s.Add(it.Value()) {
+			modified = true
+		}
+	}
+	return modified
+}
+
+func (s *HashSet[T]) Len() int {
+	return len(s.data)
+}
+
+func (s *HashSet[T]) Clear() {
+	s.data = make(map[T]struct{})
+}
+
+func (s *HashSet[T]) Contains(v T) bool {
+	_, ok := s.data[v]
+	return ok
+}
+
+func (s *HashSet[T]) ContainsAll(col Collection[T]) bool {
+	it := col.Iterator()
+	for it.Next() {
+		if !s.Contains(it.Value()) {
+			return false
+		}
+	}
+	return true
+}
+
+func (s *HashSet[T]) Remove(v T) bool {
+	if s.Contains(v) {
+		delete(s.data, v)
+		return true
+	}
+	return false
+}
+
+func (s *HashSet[T]) RemoveAll(col Collection[T]) bool {
+	modified := false
+	it := col.Iterator()
+	for it.Next() {
+		if s.Remove(it.Value()) {
+			modified = true
+		}
+	}
+	return modified
+}

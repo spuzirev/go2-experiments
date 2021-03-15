@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/spuzirev/exp/ds"
 	"github.com/spuzirev/exp/functools"
 )
 
@@ -38,4 +39,28 @@ func main() {
 			},
 		),
 	) // map[int][]int{1:[]int{1, 2, 3}, 2:[]int{30}, 3:[]int{400, 600}}
+
+	playDS()
+}
+
+func playDS() {
+	intv := ds.NewVectorFromSlice([]int{1, 2, 3})
+	it := intv.Iterator()
+	for it.Next() {
+		fmt.Println(it.Value())
+	}
+
+	intStack := ds.NewStack[int]()
+	intStack.Push(2)
+	intStack.Push(3)
+
+	for !intStack.IsEmpty() {
+		fmt.Println(intStack.Pop())
+	}
+
+	intSet := ds.NewHashSet[int]()
+	fmt.Println(intSet.Contains(0))
+
+	intSet.Add(0)
+	fmt.Println(intSet.Contains(0))
 }

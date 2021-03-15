@@ -1,0 +1,97 @@
+package ds
+
+type Vector[T any] struct {
+	slice []T
+}
+
+func NewVector[T any]() *Vector[T] {
+	return &Vector[T]{}
+}
+
+func NewVectorFromSlice[T any](slice []T) *Vector[T] {
+	return &Vector[T]{
+		slice: slice,
+	}
+}
+
+func (vec *Vector[T]) Iterator() *VectorIterator[T] {
+	return &VectorIterator[T]{
+		vec: vec,
+		pos: -1,
+	}
+}
+
+func (vec *Vector[T]) Add(v T) bool {
+	vec.slice = append(vec.slice, v)
+	return true
+}
+
+func (vec *Vector[T]) AddAll(col Collection[T]) bool {
+	it := col.Iterator()
+	for it.Next() {
+		vec.Add(it.Value())
+	}
+	return true
+}
+
+// func (vec *Vector[T]) Contains(v T) bool {
+// 	it := vec.Iterator()
+// 	for it.Next() {
+// 		if it.Value() == v {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
+
+// func (vec *Vector[T]) ContainsAll(col Collection[T]) bool {
+// 	it := col.Iterator()
+// 	for it.Next() {
+// 		if !vec.Contains(needleIt.Value()) {
+// 			return false
+// 		}
+// 	}
+// 	return true
+// }
+
+// func (vec *Vector[T]) Remove(v T) bool {
+// 	it := vec.Iterator()
+// 	for it.Next() {
+// 		if it.Value() == v {
+// 			it.Remove()
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
+
+// func (vec *Vector[T]) RemoveAll(col Collection[T]) bool {
+// 	modified = false
+// 	it := col.Iterator()
+// 	for it.Next() {
+// 		if vec.Remove(it.Value) {
+// 			modified = true
+// 		}
+// 	}
+// 	return modified
+// }
+
+func (vec *Vector[T]) Len() int {
+	return len(vec.slice)
+}
+
+func (vec *Vector[T]) Clear() {
+	vec.slice = vec.slice[0:]
+}
+
+func (vec *Vector[T]) Set(i int, v T) {
+	vec.slice[i] = v
+}
+
+func (vec *Vector[T]) Get(i int) T {
+	return vec.slice[i]
+}
+
+func (vec *Vector[T]) RemoveAt(i int) {
+	vec.slice = append(vec.slice[:i], vec.slice[i+1:]...)
+}

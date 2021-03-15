@@ -1,0 +1,11 @@
+package ds
+
+type Set[T comparable] interface {
+	Collection[T]
+
+	Contains(T) bool
+	ContainsAll(Collection[T]) bool
+
+	Remove(T) bool
+	RemoveAll(Collection[T]) bool
+}

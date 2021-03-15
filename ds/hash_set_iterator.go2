@@ -1,0 +1,25 @@
+package ds
+
+type HashSetIterator[T comparable] struct {
+	set  *HashSet[T]
+	keys []T
+	pos  int
+}
+
+func (si *HashSetIterator[T]) Next() bool {
+	if si.keys == nil {
+		si.keys = make([]T, 0)
+		for k, _ := range si.set.data {
+			si.keys = append(si.keys, k)
+		}
+	}
+	si.pos++
+	if si.pos < len(si.keys) {
+		return true
+	}
+	return false
+}
+
+func (si *HashSetIterator[T]) Value() T {
+	return si.keys[si.pos]
+}

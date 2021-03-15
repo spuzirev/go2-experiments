@@ -1,0 +1,19 @@
+package ds
+
+type VectorIterator[T any] struct {
+	vec *Vector[T]
+	pos int
+}
+
+func (vi *VectorIterator[T]) Next() bool {
+	vi.pos++
+
+	if vi.pos < vi.vec.Len() {
+		return true
+	}
+	return false
+}
+
+func (vi *VectorIterator[T]) Value() T {
+	return vi.vec.Get(vi.pos)
+}

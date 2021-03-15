@@ -1,0 +1,9 @@
+package ds
+
+type List[T any] interface {
+    Collection[T]
+
+    Set(int, T)
+    Get(int) T
+    RemoveAt(int)
+}

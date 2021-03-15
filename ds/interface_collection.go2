@@ -1,0 +1,11 @@
+package ds
+
+type Collection[T any] interface {
+	Iterable[T]
+
+	Add(T) bool
+	AddAll(Collection[T]) bool
+
+	Len() int
+	Clear()
+}
